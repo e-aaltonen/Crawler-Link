@@ -1,7 +1,7 @@
-#Crawler-Link
+# Crawler-Link
 by E. Aaltonen 2023
 
-##The first fully working prototype version for testing and evaluation
+## The first fully working prototype version for testing and evaluation
 
 The aim of this project is to use an on-board MCU for remote control of secondary accessories on an RC truck and for accessing telemetry data gathered by the system through WiFi. This first implementation mainly involves the control of LED lighting on the truck.
 
@@ -14,7 +14,7 @@ The present solution comprises four devices:
 Devices A and B are linked through a one-way ESP-NOW connection (A as the initiator and B as the respondent). Devices B and C are linked via I2C (C being the master). Device C serves as a WiFi Access Point for the client device.
 
 
-##Behaviour: Device A
+## Behaviour: Device A
 
 Pushbuttons connected to Device A control the following functions on Device B:
 - Button A: step up lighting level (4 levels: off, parking, low-beam, high-beam)
@@ -34,7 +34,7 @@ buttons - - F E B A D C
 The present behaviour is very simple; the device transmits a message every time a button is pressed. The transmission encoding itself supports pressing multiple buttons simultaneously.
 
 
-##Behaviour: Device B
+## Behaviour: Device B
 
 Device B has 6 digital outputs, with the following functions:
 - LEDs, left blinkers
@@ -52,7 +52,7 @@ Because this RC model is a Ford Bronco 1979, front blinkers and tail lights are 
 The program simulates traditional light bulbs by increasing or decreasing the brightess level over an adjusted onset or offset period.
 
 
-##Behaviour: Device C
+## Behaviour: Device C
 
 The behaviour of Device C is mostly experimental at this stage. In essence, it establishes a WiFi network for the client device to interface. The SSID is "ESP8266 Thing " plus the two last bytes of its MAC address. The network password is hard-coded in the source.
 
@@ -72,12 +72,12 @@ This sequence should to be extended from 1 byte to e.g. 5 bytes for future use, 
 The source code for Device C is from an earlier project written in the Arduino IDE, while devices A and B are developed with PlatformIO. When changing over to PlatformIO, some changes are necessary, such as renaming pins D0 etc. (as printed on the device) as 16 etc. (for GPIO16 etc., as presented in the appropriate pinout diagram).
 
 
-##Capabilities of Device C
+## Capabilities of Device C
 
 In this implementation, the WiFi service is taking up most of Device C's resources. Running the LED soft blinker functions on the same chip wasn't feasible. This chip has a handsome number of IO pins, though, and it could be used for simple accessories with no timing or computing requirements.
 
 
-##Coming up
+## Coming up
 
 Features to be implemented in the next stages:
 - battery voltage readings to be displayed on the HTML page
