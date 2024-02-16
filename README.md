@@ -1,14 +1,14 @@
 # Crawler-Link
 by E. Aaltonen 2023
 
-## The first fully working prototype version for testing and evaluation
+## First fully working prototype version for testing and evaluation
 
 The aim of this project is to use an on-board MCU for remote control of secondary accessories on an RC truck and for accessing telemetry data gathered by the system through WiFi. This first implementation mainly involves the control of LED lighting on the truck.
 
 The present solution comprises four devices:
 - Device A: ESP32C3, for physical user interface, incorporated in the RC transmitter
 - Device B: ESP32C3, the main MCU for controlling onboard hardware
-- Device C: ESP8266, for WiFi Access Point (onboard)
+- Device C: ESP8266, as a WiFi Access Point (onboard)
 - Client device (e.g. a smartphone) to access the HTML interface broadcasted by Device C
 
 Devices A and B are linked through a one-way ESP-NOW connection (A as the initiator and B as the respondent). Devices B and C are linked via I2C (C being the master). Device C serves as a WiFi Access Point for the client device.
@@ -28,9 +28,10 @@ Physical buttons E and F will be assigned for other purposes in future versions.
 
 Battery supply voltage is connected to an ADC pin with a voltage divider circuit, such that the voltage value can be calculated based on the analog input (the maximum input is 3.3V).
 
-When a button is pushed, Device A transmits a struct consisting of an integer for buttons and a float value for voltage. The value of buttons A-F is exhibited by setting the corresponding bit high:
-bits    7 6 5 4 3 2 1 0
+When a button is pushed, Device A transmits a struct consisting of an integer for buttons and a float value for voltage. The value of buttons A-F is exhibited by setting the corresponding bit high:<br>
+bits    7 6 5 4 3 2 1 0<br>
 buttons - - F E B A D C
+
 The present behaviour is very simple; the device transmits a message every time a button is pressed. The transmission encoding itself supports pressing multiple buttons simultaneously.
 
 
