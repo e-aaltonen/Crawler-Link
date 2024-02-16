@@ -29,9 +29,8 @@ Physical buttons E and F will be assigned for other purposes in future versions.
 Battery supply voltage is connected to an ADC pin with a voltage divider circuit, such that the voltage value can be calculated based on the analog input (the maximum input is 3.3V).
 
 When a button is pushed, Device A transmits a struct consisting of an integer for buttons and a float value for voltage. The value of buttons A-F is exhibited by setting the corresponding bit high:<br>
-bits, buttons<br>
- 7 6 5 4 3 2 1 0<br>
- - - F E B A D C
+bit 7 6 5 4 3 2 1 0<br>
+key - - F E B A D C
 
 The present behaviour is very simple; the device transmits a message every time a button is pressed. The transmission encoding itself supports pressing multiple buttons simultaneously.
 
