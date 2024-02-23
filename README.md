@@ -8,10 +8,10 @@ The aim of this project is to use an on-board MCU for remote control of secondar
 The present solution comprises four devices:
 - Device A: ESP32C3, for physical user interface, incorporated in the RC transmitter
 - Device B: ESP32C3, the main MCU for controlling onboard hardware
-- Device C: ESP8266, as a WiFi Access Point (onboard)
+- Device C: ESP8266, a WiFi Access Point (onboard)
 - Client device (e.g. a smartphone) to access the HTML interface broadcasted by Device C
 
-Devices A and B are linked through a one-way ESP-NOW connection (A as the initiator and B as the respondent). Devices B and C are linked via I2C (C being the master). Device C serves as a WiFi Access Point for the client device.
+Devices A and B are linked through a one-way ESP-NOW connection (A as the initiator and B as the respondent). Devices B and C are linked via I<sup>2</sup>C (C being the master). Device C serves as a WiFi Access Point for the client device.
 
 
 ## Behaviour: Device A
@@ -44,13 +44,14 @@ Device B has 6 digital outputs, with the following functions:
 - LED, left tail light
 - LED, right tail light
 - LEDs, reverse lights
+  
 These 3.3V outputs are connected to transistors (BC547C), which in turn switch the relevant LED circuits (powered from a 5-volt source) on and off.
 
-Pins D4 and D5 are reserved for the I2C bus.
+Pins D4 and D5 are reserved for the I<sup>2</sup>C bus.
 
-Because this RC model is a Ford Bronco 1979, front blinkers and tail lights are controlled in accordance with the North American tradition: all corner lights are lit in dim mode when lighting level 1 or above is switched on. When brake is activated, the rear lights light up with full brightness, and when lifted, the previous intensity ("base brightness") based on the lighting level (off or dim) is restored. The blinking function blinks the corresponding LEDs with a similar logic, between full brightness and the base brightness. The behaviour of rear lights in the emergency blinker mode, with both blinkers activated, is identical to pumping the brake repeatedly. When this mode is entered by activating first one blinker and then the other one, the timing of the second blinker matches that of the first one.
+Because this particular RC model is a Ford Bronco 1979, front blinkers and tail lights are controlled in accordance with the North American tradition: all corner lights are lit in dim mode when lighting level 1 or above is switched on. When brake is activated, the rear lights light up with full brightness, and when lifted, the previous intensity ("base brightness") based on the lighting level (off or dim) is restored. The blinking function blinks the corresponding LEDs with a similar logic, between full brightness and the base brightness. The behaviour of rear lights in the emergency blinker mode, with both blinkers activated, is identical to pumping the brake repeatedly. When this mode is entered by activating first one blinker and then the other one, the timing of the second blinker is matched to that of the first one.
 
-The program simulates traditional light bulbs by increasing or decreasing the brightess level over an adjusted onset or offset period.
+The program simulates traditional light bulbs by increasing or decreasing the brightness level over an adjusted onset or offset period.
 
 
 ## Behaviour: Device C
@@ -63,7 +64,7 @@ Buttons visible on the screen have the same function as the physical devices on 
 
 The HTML page is also intended to display the voltage value passed on from Device A as well as the voltage level of the on-board battery. This feature is not implemented in the present solution. ESP8266 only has one ADC pin and could therefore only read the overall supply voltage (with an adequte voltage divider, as the ADC pin is only rated for 3.3 volts). If more relevant information (per-cell voltage) is desired, this chip would need to be replaced with an ESP32 or the readings should be taken on Device B.
 
-When an HTTP request is made, Device C passes on the command to Device B through the I2C bus with a one-byte message, encoded in a manner similar to the integer part transmitted by Device A. 
+When an HTTP request is made, Device C passes on the command to Device B through the I<sup>2</sup>C bus with a one-byte message, encoded in a manner similar to the integer part transmitted by Device A. 
 
 After this, Device C requests a status update from Device B. Bits 2 and 3 of the message are now assigned to the numeral value of the lighting status (00, 01, 10 and 11). 
 
